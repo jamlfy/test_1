@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Para PostgreSQL en producción/RDS (requiere cambiar provider y DATABASE_URL):
+//   - Los campos String con @default reemplazan a los enums nativos de PostgreSQL
+//   - Compatible con ambos motores sin cambios de código
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("CLIENT")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  requests ProductRequest[] @relation("ClientRequests")
+  offers   Offer[]          @relation("ProviderOffers")
+}
+
+model ProductRequest {
+  id          String   @id @default(uuid())
+  clientId    String
+  productName String
+  description String   @default("")
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  client User    @relation("ClientRequests", fields: [clientId], references: [id])
+  offers Offer[]
+}
+
+model Offer {
+  id         String   @id @default(uuid())
+  requestId  String
+  providerId String
+  price      Float
+  message    String   @default("")
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  request  ProductRequest @relation(fields: [requestId], references: [id])
+  provider User           @relation("ProviderOffers", fields: [providerId], references: [id])
+}
