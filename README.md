@@ -13,22 +13,18 @@ Sistema de solicitudes de productos entre clientes y proveedores con interacció
 ## Instalación
 
 ```bash
-git clone <repo>
-cd product-request-system
-
-# 2. Configurar variables de entorno
 cp .env.example .env
 
-# 3. Instalar dependencias
+# Instalar dependencias
 npm install
 
-# 4. Generar cliente Prisma y ejecutar migraciones
+# Generar cliente Prisma y ejecutar migraciones
 npx prisma migrate dev --name init
 
-# 5. (Opcional) Poblar DB con datos de prueba
+# Generar DB con datos de prueba
 npm run db:seed
 
-# 6. Iniciar servidor
+# Iniciar servidor
 npm run dev
 ```
 
