@@ -2,14 +2,6 @@
 
 Sistema de solicitudes de productos entre clientes y proveedores con interacción de ofertas.
 
-## Requisitos
-
-- Node.js >= 18
-- npm
-
-> **Nota sobre la base de datos**: Por defecto usa **SQLite** (no requiere instalación externa).
-> Para producción en **AWS RDS PostgreSQL**, cambiar `prisma/schema.prisma` y `.env` (ver sección "Migrar a PostgreSQL").
-
 ## Instalación
 
 ```bash
@@ -49,16 +41,16 @@ npm run dev
 
 ### Ofertas
 
-| Método | Ruta | Auth | Rol | Descripción |
-|--------|------|------|-----|-------------|
-| POST | `/api/offers/:id` | JWT | PROVIDER | Crear oferta |
-| GET | `/api/offers/:id` | JWT | - | Listar ofertas |
-| PATCH | `/api/offers/:id/accept` | JWT | CLIENT | Aceptar oferta |
-| PATCH | `/api/offers/:id/reject` | JWT | CLIENT | Rechazar oferta |
-| POST | `/api/offers/:id/counter` | JWT | CLIENT | Contraofertar |
-| PATCH | `/api/offers/:id/respond-counter` | JWT | PROVIDER | Responder contraoferta |
-| POST | `/api/auth/refresh` | No | - | Refresh token |
-| POST | `/api/auth/change-password` | JWT | - | Cambiar contraseña |
+| Implementado | Método | Ruta | Auth | Rol | Descripción |
+|--------|-------|------|------|-----|-------------|
+| Si | POST |  `/api/offers/:id` | JWT | PROVIDER | Crear oferta |
+| Si | GET | `/api/offers/:id` | JWT | - | Listar ofertas |
+| No | PATCH | `/api/offers/:id/accept` | JWT | CLIENT | Aceptar oferta |
+| No | PATCH | `/api/offers/:id/reject` | JWT | CLIENT | Rechazar oferta |
+| No | POST | `/api/offers/:id/counter` | JWT | CLIENT | Contraofertar |
+| No | PATCH | `/api/offers/:id/respond-counter` | JWT | PROVIDER | Responder contraoferta |
+| No | POST | `/api/auth/refresh` | No | - | Refresh token |
+| No | POST | `/api/auth/change-password` | JWT | - | Cambiar contraseña |
 
 ## Seed (Datos de Prueba)
 
@@ -73,22 +65,6 @@ Credenciales generadas:
 | CLIENT | `cliente@test.com` | `client123` |
 | PROVIDER | `proveedor@test.com` | `provider123` |
 
-## Tests
-
-```bash
-npm test
-```
-
-## Scripts
-
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Iniciar servidor en modo desarrollo (hot-reload) |
-| `npm run build` | Compilar TypeScript a JavaScript |
-| `npm start` | Iniciar servidor en producción |
-| `npm test` | Ejecutar tests |
-| `npm run db:migrate` | Ejecutar migraciones de Prisma |
-| `npm run db:seed` | Poblar DB con datos de prueba |
 
 ## Estructura del Proyecto
 
@@ -118,8 +94,6 @@ npm test
 npx prisma migrate dev --name init
 npm run db:seed
 ```
-
-> El código de la aplicación **no requiere cambios** al migrar de SQLite a PostgreSQL. Prisma abstrae las diferencias entre motores.
 
 ## Tecnologías
 
